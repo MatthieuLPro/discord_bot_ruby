@@ -2,47 +2,70 @@ require 'dotenv'
 Dotenv.load
 require 'bundler/setup'
 Bundler.require
+require_relative 'function'
+require_relative 'data'
 
 bot = Discordrb::Bot.new token: ENV.fetch('BOT_TOKEN'), client_id: ENV.fetch('CLIENT_ID')
 
-bot.message(with_text: 'Command!') do |event|
+bot.message(with_text: '!command') do |event|
   event.respond "Comment ça tu connais pas tes commandes ?!
-  - Command! : Afficher les commandes
-  - Event! : Afficher les prochains évènements
-  - Bt7! : Afficher le top 5 T7
-  - Bsfv! : Afficher le top 5 SFV
-  - Bdbz! : Afficher le top 5 DBZ"
+  - !event : Afficher les prochains évènements
+  - !bt7 : Afficher le top 5 T7
+  - !bsf : Afficher le top 5 SFV
+  - !bdbz : Afficher le top 5 DBZ"
 end
 
-bot.message(with_text: 'Event!') do |event|
-	event.respond "Y 'en a trop, je peux pas les tous les citer ..."
+
+# Event part
+bot.message(with_text: '!event') do |event|
+	tournois(event)
+	event.respond @string
 end
 
-bot.message(with_text: 'Bt7!') do |event|
-	event.respond "Heihachi approves ...
-	1st : Super Akouma - 2230 pts
-	2nd : Guni - 1795 pts
-	3eme : DougFormParis - 1215 pts
-	4eme : Kalak - 1105 pts
-	5eme : TinkiBoobiz - 785 pts"
+# Player part
+bot.message(with_text: '!bt7') do |event|
+	player_list(event, "tekken")
+	event.respond @string
 end
 
-bot.message(with_text: 'Bsfv!') do |event|
-	event.respond "Hadouken spirit team ...
-	1st : Luffy - 2165 pts
-	2nd : Akainu - 1205 pts
-	3eme : JuniorLeo - 587 pts
-	4eme : Mister Crimson - 410 pts
-	5eme : Layo - 355 pts"
+bot.message(with_text: '!bsf') do |event|
+	player_list(event, "sf")
+	event.respond @string
 end
 
-bot.message(with_text: 'Bdbz!') do |event|
-	event.respond "Omae no deban da Gohan !
-	1st : Skyll - 1720 pts
-	2nd : Eifi - 1435 pts
-	3eme : Wawa - 1335 pts
-	4eme : Alioune - 915 pts
-	5eme : Noka - 835 pts"
+bot.message(with_text: '!bdbz') do |event|
+	player_list(event, "dbz")
+	event.respond @string
+end
+
+# Association part
+bot.message(with_text: '!bureau') do |event|
+	identify_user(event)
+	event.respond "@#{@user}: Président : RudeBoy - Trésorier : Malus"
+end
+
+bot.message(with_text: '!projet') do |event|
+	identify_user(event)
+	projets(event)
+	event.respond "@#{@user}: #{@string}"
+end
+
+# Animation part
+bot.message(with_text: '!merci') do |event|
+	identify_user(event)
+	event.respond "@#{@user}: de rien !"
+end
+
+bot.message(with_text: '!dice') do |event|
+	value = rand(6) + 1
+	identify_user(event)
+	if value <= 2
+		event.respond "@#{@user} obtient une valeur de #{value} ... dommage !"
+	elsif value <= 5
+		event.respond "@#{@user} obtient une valeur de #{value}, pas mal !"
+	else
+		event.respond "@#{@user} obtient une valeur de #{value}, GG !"
+	end
 end
 
 bot.run

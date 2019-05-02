@@ -40,31 +40,27 @@ end
 
 # Association part
 bot.message(with_text: '!bureau') do |event|
-	identify_user(event)
-	event.respond "@#{@user}: Président : RudeBoy - Trésorier : Malus"
+	event.respond "#{event.author.mention} Président : RudeBoy - Trésorier : Malus"
 end
 
 bot.message(with_text: '!projet') do |event|
-	identify_user(event)
 	projets(event)
-	event.respond "@#{@user}: #{@string}"
+	event.respond "#{event.author.mention} #{@string}"
 end
 
 # Animation part
 bot.message(with_text: '!merci') do |event|
-	identify_user(event)
-	event.respond "@#{@user}: de rien !"
+	event.respond "#{event.author.mention} de rien !"
 end
 
 bot.message(with_text: '!dice') do |event|
 	value = rand(6) + 1
-	identify_user(event)
 	if value <= 2
-		event.respond "@#{@user} obtient une valeur de #{value} ... dommage !"
+		event.respond "#{event.author.mention} obtient une valeur de #{value} ... dommage !"
 	elsif value <= 5
-		event.respond "@#{@user} obtient une valeur de #{value}, pas mal !"
+		event.respond "#{event.author.mention} obtient une valeur de #{value}, pas mal !"
 	else
-		event.respond "@#{@user} obtient une valeur de #{value}, GG !"
+		event.respond "#{event.author.mention} obtient une valeur de #{value}, GG !"
 	end
 end
 

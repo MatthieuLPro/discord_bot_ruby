@@ -7,3 +7,5 @@
 @listing_player = { "tekken" => "Heihachi approves ...\n", "sf" => "Hadouken spirit team ...\n", "dbz" => "Omae no deban da Goahn !\n" }
 
 @projet = { "Stream Tekken Global" => "Mishima", "Esport VS Club" => "Kazuya" }
+
+@merci_array = ["!merci", "!thanks"]

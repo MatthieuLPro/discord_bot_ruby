@@ -49,7 +49,7 @@ bot.message(with_text: '!projet') do |event|
 end
 
 # Animation part
-bot.message(with_text: '!merci') do |event|
+bot.message(with_text: @merci_array.each { |value| value }) do |event|
 	event.respond "#{event.author.mention} de rien !"
 end
 

@@ -23,18 +23,8 @@ bot.message(with_text: '!event') do |event|
 end
 
 # Player part
-bot.message(with_text: '!bt7') do |event|
-	player_list(event, "tekken")
-	event.respond @string
-end
-
-bot.message(with_text: '!bsf') do |event|
-	player_list(event, "sf")
-	event.respond @string
-end
-
-bot.message(with_text: '!bdbz') do |event|
-	player_list(event, "dbz")
+bot.message(with_text: @player_game.each { |value| "!#{value}"}) do |event|
+	player_list(event, event.message.content)
 	event.respond @string
 end
 

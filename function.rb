@@ -1,6 +1,14 @@
 # All the functions
 
 def player_list(event, game)
+	case game
+		when "!bt7"
+		game = "tekken"
+		when "!bsf"
+		game = "sf"
+		when "!bdbz"
+		game = "dbz"
+	end 
 	@string = @listing_player[game]
 	eval("@player_#{game}").each_with_index { |(key, value), index| @string += "#{index + 1}) #{key} - #{value} points.\n" }
 end
